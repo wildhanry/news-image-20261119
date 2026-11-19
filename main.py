@@ -188,12 +188,24 @@ def draw_map(draw, x0, y0, x1, y1, land=LAND, outline=(150, 142, 122)):
     return proj
 
 
-def draw_pins(draw, proj, pins, radius=7, number_size=8):
+# Pixel offsets for pins whose places sit close together on the map
+# (Europe / Middle East / Indonesia clusters), so numbers stay readable.
+PIN_OFFSETS = {
+    3: (12, -10), 4: (-13, 9), 5: (13, 8), 6: (-15, -8), 7: (-11, -6),
+    12: (-6, -13), 22: (15, 12), 23: (-16, 14),
+}
+
+
+def draw_pins(draw, proj, pins, radius=8, number_size=9):
     f = font(SANS_B, number_size)
     for lon, lat, num, col in pins:
         px, py = proj(lon, lat)
+        dx, dy = PIN_OFFSETS.get(num, (0, 0))
+        px, py = px + dx, py + dy
+        draw.ellipse([px - radius - 1, py - radius - 1, px + radius + 1,
+                      py + radius + 1], fill=MAST_DARK)
         draw.ellipse([px - radius, py - radius, px + radius, py + radius],
-                     fill=col, outline=WHITE)
+                     fill=col, outline=WHITE, width=2)
         t = str(num)
         draw.text((px - draw.textlength(t, font=f) / 2,
                    py - number_size / 2 - 1), t, font=f, fill=WHITE)
@@ -246,7 +258,7 @@ def _waves(d, x, y, w, h, color=WHITE):
 def scene_skyline(d, x, y, w, h):
     """Dusk skyline with lit windows and three flag poles (summit)."""
     d.rectangle([x, y, x + w, y + h], fill=(26, 44, 66))
-    d.ellipse([x + w * 0.80, y + h * 0.07, x + w * 0.93, y + h * 0.24],
+    d.ellipse([x + w * 0.85, y + h * 0.05, x + w * 0.94, y + h * 0.19],
               fill=(255, 214, 120))
     heights = [0.52, 0.74, 0.60, 0.86, 0.66, 0.78, 0.56, 0.70]
     bw = w / len(heights)
@@ -262,10 +274,10 @@ def scene_skyline(d, x, y, w, h):
                     d.rectangle([wxp, wyp, wxp + 5, wyp + 6],
                                 fill=(255, 214, 120))
     for i, col in enumerate([(178, 34, 52), (60, 59, 110), (222, 41, 16)]):
-        fx = x + w * (0.16 + i * 0.26)
-        d.line([(fx, y + h * 0.16), (fx, y + h * 0.50)], fill=WHITE, width=2)
-        d.rectangle([fx + 2, y + h * 0.16, fx + 2 + w * 0.13,
-                     y + h * 0.16 + h * 0.15], fill=col)
+        fx = x + w * (0.14 + i * 0.22)
+        d.line([(fx, y + h * 0.22), (fx, y + h * 0.52)], fill=WHITE, width=2)
+        d.rectangle([fx + 2, y + h * 0.22, fx + 2 + w * 0.075,
+                     y + h * 0.22 + h * 0.10], fill=col)
 
 
 def scene_gavel(d, x, y, w, h):
@@ -357,7 +369,19 @@ CARD_KIND = {
 
 def draw_card_icon(d, kind, x, y, w, h):
     if kind == "drone":
-        scene_drone(d, x, y, w, h)
+        # Compact portrait-safe drone: centred, nothing touches the edges.
+        d.rectangle([x, y, x + w, y + h], fill=(232, 222, 200))
+        d.rectangle([x, y + h * 0.74, x + w, y + h], fill=(200, 190, 150))
+        cx, cy = x + w * 0.40, y + h * 0.24
+        d.ellipse([cx - 9, cy - 3, cx + 9, cy + 3], fill=INK)
+        d.line([(cx - 15, cy - 5), (cx + 15, cy - 5)], fill=INK, width=2)
+        d.line([(cx, cy - 9), (cx, cy + 5)], fill=INK, width=2)
+        for t in [i / 6 for i in range(7)]:
+            px = cx + 10 + w * 0.34 * t
+            py = cy + 7 + h * 0.32 * t
+            d.ellipse([px - 1.5, py - 1.5, px + 1.5, py + 1.5], fill=SLATE)
+        _explosion(d, x + w * 0.74, y + h * 0.60, h * 0.13)
+        _smoke(d, x + w * 0.74, y + h * 0.42, h * 0.08)
     elif kind == "globe":
         d.rectangle([x, y, x + w, y + h], fill=(226, 238, 244))
         scene_globe_fire(d, x, y, w, h)
@@ -377,10 +401,16 @@ def draw_card_icon(d, kind, x, y, w, h):
     elif kind == "atom":
         d.rectangle([x, y, x + w, y + h], fill=(30, 42, 68))
         cx, cy = x + w / 2, y + h / 2
-        for ang in (0, 60, 120):
-            bbox = [cx - w * 0.34, cy - h * 0.20, cx + w * 0.34,
-                    cy + h * 0.20]
-            d.ellipse(bbox, outline=(255, 214, 120), width=2)
+        for ang_deg in (0, 60, 120):
+            ang = math.radians(ang_deg)
+            pts = []
+            for k in range(37):
+                t = 2 * math.pi * k / 36
+                ex = w * 0.32 * math.cos(t)
+                ey = h * 0.17 * math.sin(t)
+                pts.append((cx + ex * math.cos(ang) - ey * math.sin(ang),
+                            cy + ex * math.sin(ang) + ey * math.cos(ang)))
+            d.line(pts, fill=(255, 214, 120), width=2)
         d.ellipse([cx - 6, cy - 6, cx + 6, cy + 6], fill=CRIMSON)
     elif kind == "sun":
         d.rectangle([x, y, x + w, y + h], fill=(250, 230, 180))
@@ -491,84 +521,98 @@ def main():
         x += tw + 24
 
     # leads
-    ly, lh = 118, 218
+    ly, lh = 118, 190
     # lead 1 (big, left)
     d.rectangle([24, ly, 664, ly + lh], fill=(26, 44, 66))
-    scene_skyline(d, 24, ly, 640, 150)
-    d.rectangle([24, ly + 150, 664, ly + lh], fill=MAST_DARK)
-    d.text((36, ly + 156), "1  SHENZHEN SUMMIT", font=font(SANS_B, 15),
+    scene_skyline(d, 24, ly, 640, 128)
+    d.rectangle([24, ly + 128, 664, ly + lh], fill=MAST_DARK)
+    d.text((36, ly + 134), "1  SHENZHEN SUMMIT", font=font(SANS_B, 15),
            fill=GOLD)
     for i, ln in enumerate(wrap(d, leads[0]["headline"] + " - " +
                                 leads[0]["summary"], font(SANS, 11), 616,
-                                max_lines=3)):
-        d.text((36, ly + 176 + i * 14), ln, font=font(SANS, 11),
+                                max_lines=2)):
+        d.text((36, ly + 155 + i * 14), ln, font=font(SANS, 11),
                fill=(228, 232, 226))
-    # lead 2 (top right)
-    d.rectangle([676, ly, 1000, ly + 104], fill=(238, 232, 218),
+    # lead 2 (top right): gavel scene left, text right
+    d.rectangle([676, ly, 1000, ly + 91], fill=(238, 232, 218),
                 outline=(200, 194, 178))
-    scene_gavel(d, 676, ly, 150, 104)
-    d.text((836, ly + 8), "2  WORLD COURT", font=font(SANS_B, 12),
+    scene_gavel(d, 676, ly, 118, 91)
+    d.text((806, ly + 7), "2  WORLD COURT", font=font(SANS_B, 12),
            fill=CRIMSON)
     for i, ln in enumerate(wrap(d, leads[1]["headline"],
-                                font(SANS_B, 11), 152, max_lines=4)):
-        d.text((836, ly + 26 + i * 14), ln, font=font(SANS_B, 11), fill=INK)
-    # lead 3 (bottom right)
-    d.rectangle([676, ly + 114, 1000, ly + lh], fill=(214, 228, 238),
+                                font(SANS_B, 11), 182, max_lines=4)):
+        d.text((806, ly + 25 + i * 14), ln, font=font(SANS_B, 11), fill=INK)
+    # lead 3 (bottom right): bridge scene left, text right
+    d.rectangle([676, ly + 99, 1000, ly + lh], fill=(214, 228, 238),
                 outline=(200, 194, 178))
-    scene_bridge(d, 830, ly + 114, 170, 104)
-    d.text((688, ly + 122), "3  CRIMEA", font=font(SANS_B, 12), fill=MAST)
+    scene_bridge(d, 676, ly + 99, 118, 91)
+    d.text((806, ly + 106), "3  CRIMEA BRIDGE", font=font(SANS_B, 12),
+           fill=MAST)
     for i, ln in enumerate(wrap(d, leads[2]["headline"],
-                                font(SANS_B, 11), 132, max_lines=4)):
-        d.text((688, ly + 140 + i * 14), ln, font=font(SANS_B, 11), fill=INK)
+                                font(SANS_B, 11), 182, max_lines=4)):
+        d.text((806, ly + 124 + i * 14), ln, font=font(SANS_B, 11),
+               fill=INK)
 
-    # map panel
-    my, mh = 344, 160
+    # map panel (taller in v2: 240 px, so continents and pins can breathe)
+    my, mh = 316, 240
     d.rectangle([24, my, 1000, my + mh], fill=(226, 238, 244))
     d.text((36, my + 6), "WHERE IT HAPPENED - pins 1-13, dots for the rest",
            font=font(SANS_B, 12), fill=MAST)
-    proj = draw_map(d, 36, my + 28, 988, my + mh - 8)
+    proj = draw_map(d, 36, my + 30, 988, my + mh - 10)
     pins = [(s["lon"], s["lat"], s["id"],
              REGION_COLORS.get(s["region"], SLATE))
             for s in leads + cards]
     draw_pins(d, proj, pins, radius=8, number_size=9)
     draw_dots(d, proj, [(s["lon"], s["lat"]) for s in also], radius=2)
 
-    # cards grid: 5 across x 2 rows
-    cy0 = 512
-    cw, chh, gap = 188, 96, 9
+    # cards grid: 5 across x 2 rows; headline plus a short summary line
+    cy0 = 564
+    cw, chh, gap = 188, 91, 8
     for i, s in enumerate(cards):
         cx = 24 + (i % 5) * (cw + gap)
         cyy = cy0 + (i // 5) * (chh + gap)
         d.rectangle([cx, cyy, cx + cw, cyy + chh], fill=WHITE,
                     outline=(200, 194, 178))
         draw_card_icon(d, CARD_KIND.get(s["id"], ""), cx + 5, cyy + 5,
-                       62, 86)
-        d.text((cx + 73, cyy + 6), "%d  %s" % (s["id"], s["place"].split(",")[0].upper()[:14]),
-               font=font(SANS_B, 9), fill=REGION_COLORS.get(s["region"], SLATE))
-        for j, ln in enumerate(wrap(d, s["headline"], font(SANS_B, 10),
-                                    cw - 80, max_lines=5)):
-            d.text((cx + 73, cyy + 20 + j * 12), ln, font=font(SANS_B, 10),
-                   fill=INK)
+                       54, 81)
+        tx = cx + 65
+        d.text((tx, cyy + 5), "%d  %s" % (s["id"], s["place"].split(",")[0].upper()[:14]),
+               font=font(SANS_B, 8), fill=REGION_COLORS.get(s["region"], SLATE))
+        head = wrap(d, s["headline"], font(SANS_B, 10), cw - 72,
+                    max_lines=3)
+        yy = draw_lines(d, head, tx, cyy + 18, font(SANS_B, 10), INK, 12)
+        short = s.get("short") or s["summary"]
+        room = cyy + chh - 5 - yy
+        if room >= 21:
+            max_sl = 2
+        elif room >= 11:
+            max_sl = 1
+        else:
+            max_sl = 0
+        if max_sl:
+            draw_lines(d, wrap(d, short, font(SANS, 8), cw - 72,
+                               max_lines=max_sl),
+                       tx, yy + 1, font(SANS, 8), SLATE, 10)
 
     # also-on list: 3 columns
-    ay = 720
+    ay = 762
     d.rectangle([24, ay, 1000, 982], fill=MAST)
-    d.text((36, ay + 8), "ALSO ON 19 NOVEMBER", font=font(SANS_B, 14),
+    d.text((36, ay + 7), "ALSO ON 19 NOVEMBER", font=font(SANS_B, 13),
            fill=GOLD)
     col_w = 312
     per_col = 9
     for ci in range(3):
         items = also[ci * per_col:(ci + 1) * per_col]
         cx = 36 + ci * (col_w + 12)
-        yy = ay + 34
+        yy = ay + 32
         for s in items:
             txt = "%d. %s" % (s["id"], s["headline"])
             lines = wrap(d, txt, font(SANS, 9), col_w, max_lines=2)
             for ln in lines:
                 d.text((cx, yy), ln, font=font(SANS, 9),
                        fill=(238, 240, 236))
-                yy += 12
-            yy += 4
+                yy += 11
+            yy += 3
 
     # footer
     d.text((24, 990),

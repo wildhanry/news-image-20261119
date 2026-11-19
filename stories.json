@@ -1,1 +1,594 @@
-{"date":"2026-11-19","date_label":"Thursday 19 November 2026","note":"Each story was reported on 19 November 2026. Key facts are backed by at least two trusted sources listed per story. Disputed or single-actor claims are worded with attribution in the headline/summary.","stories":[{"headline":"Trump, Xi and Putin hold first trilateral in Shenzhen","id":1,"lat":22.55,"lon":114.05,"place":"Shenzhen, China","region":"Asia","sources":["AP","Reuters","BBC","Just Security"],"summary":"90-minute APEC-side meeting ends with a joint peace declaration on UN and ICC reform and nuclear counter-proliferation; no Ukraine settlement announced.","tier":"lead"},{"headline":"World Court: Myanmar committed genocide against Rohingya","id":2,"lat":21.9,"lon":95.9,"place":"The Hague / Myanmar","region":"Global","sources":["Reuters via Just Security","BBC","Appistos","Open Chronicle"],"summary":"ICJ rules 9-6 that Myanmar bears state responsibility for genocide in northern Rakhine, ordering restitution measures and investigations.","tier":"lead"},{"headline":"Crimean Bridge hit for third time this week","id":3,"lat":45.3,"lon":36.6,"place":"Kerch Strait, Crimea","region":"Europe","sources":["BBC via Just Security","Reuters","Appistos","UB Standard"],"summary":"Russia says Ukraine struck the Kerch Bridge again; rail traffic was suspended and damage assessed. Kyiv calls the operation unprecedented.","tier":"lead"},{"headline":"Israeli tanks push into central Gaza","id":4,"lat":31.4,"lon":34.4,"place":"Nuseirat, Gaza","region":"Middle East","sources":["BBC via Just Security","Reuters via Just Security","UB Standard"],"summary":"IDF launches a rare operation east of Nuseirat after evacuation orders, saying it targeted a tunnel; residents report artillery fire and flight.","tier":"card"},{"headline":"Missile damages PIF Tower in Riyadh","id":5,"lat":24.7,"lon":46.7,"place":"Riyadh, Saudi Arabia","region":"Middle East","sources":["Reuters","New York Times via Just Security","Appistos"],"summary":"A strike on 19 Nov damaged Saudi Arabia's Public Investment Fund tower; three sources familiar say it was a Houthi missile. Houthis did not immediately claim it.","tier":"card"},{"headline":"COP31 draft drops all fossil-fuel language","id":6,"lat":36.9,"lon":30.7,"place":"Antalya, Turkey","region":"Global","sources":["Reuters","UN News","Open Chronicle"],"summary":"Antalya draft cut from 144 to 80 paragraphs removes fossil-fuel references, first COP text to acknowledge 1.5C overshoot; Friday deadline looms.","tier":"card"},{"headline":"Serbia elects student-backed speaker 140-97","id":7,"lat":44.8,"lon":20.5,"place":"Belgrade, Serbia","region":"Europe","sources":["AP","Appistos","Rapporteur","CRTA"],"summary":"Aleksandar Cupic of the Student List becomes parliament speaker and acting president after Vucic's resignation; rival Stojan Radenovic took 97 votes.","tier":"card"},{"headline":"IAEA: North Korea expanding Yongbyon enrichment","id":8,"lat":39.8,"lon":125.8,"place":"Yongbyon, North Korea","region":"Asia","sources":["AP via Just Security","IAEA via Open Chronicle","Just Security"],"summary":"IAEA chief Grossi tells the board the Yongbyon uranium enrichment plant has been expanded, calling it a cause for serious concern.","tier":"card"},{"headline":"Fiji declares national disaster over El Nino drought","id":9,"lat":-17.7,"lon":178.4,"place":"Fiji","region":"Oceania","sources":["Appistos","Open Chronicle"],"summary":"Nationwide disaster declaration as El Nino drought threatens drinking water; emergency support prioritised for remote communities and farmers.","tier":"card"},{"headline":"Van Gogh sells for record $190.4 million","id":10,"lat":40.7,"lon":-74.0,"place":"New York, United States","region":"Americas","sources":["AP","Reuters","Sotheby's via AP"],"summary":"Chataigniers en fleurs (1890) sets a Van Gogh auction record at Sotheby's New York after a settlement over its Nazi-era history.","tier":"card"},{"headline":"Walmart raises outlook for third time this year","id":11,"lat":36.4,"lon":-94.2,"place":"Bentonville, United States","region":"Americas","sources":["Reuters","AP","Morningstar / Dow Jones"],"summary":"Q3 revenue $188.8bn, up 5.2%; US e-commerce up 23%. Full-year sales growth guide raised to 4.9-5.2% and adjusted EPS to $2.84-2.89.","tier":"card"},{"headline":"Indonesia passes asset-forfeiture law","id":12,"lat":-6.2,"lon":106.8,"place":"Jakarta, Indonesia","region":"Asia","sources":["Reuters","Antara via Reuters","Appistos"],"summary":"Parliament approves seizing assets linked to corruption and other crimes without a prior conviction, for assets of at least 1 billion rupiah.","tier":"card"},{"headline":"Somalia orders UAE ambassador to leave in 72 hours","id":13,"lat":2.0,"lon":45.3,"place":"Mogadishu, Somalia","region":"Africa","sources":["Reuters","Somali state news agency via Reuters"],"summary":"Mogadishu expels the UAE envoy and recalls its own, accusing the Emirates of sovereignty violations it calls an open invasion. UAE had not responded.","tier":"card"},{"headline":"Russian strike on Odesa kills 4, injures 13","id":14,"lat":46.5,"lon":30.7,"place":"Odesa, Ukraine","region":"Europe","sources":["Open Chronicle","UB Standard"],"summary":"Reported casualty figures as emergency services assessed damage; subject to confirmation.","tier":"also"},{"headline":"Trump warns Iran over alleged dirty-bomb plot","id":15,"lat":35.7,"lon":51.4,"place":"Tehran, Iran","region":"Middle East","sources":["Reuters via Just Security","New York Times via Just Security","Breitbart / AP wire"],"summary":"Trump says US would 'wipe them out' if attacked and will 'see what happens' in the Iran war after 1 Jan 2027; Iran denies the plot.","tier":"also"},{"headline":"South Korea top court overturns Han Duck-soo conviction","id":16,"lat":37.5,"lon":127.0,"place":"Seoul, South Korea","region":"Asia","sources":["AP via Just Security","Just Security"],"summary":"Supreme Court says intent to aid Yoon's 2024 martial-law decree was not sufficiently proven.","tier":"also"},{"headline":"Denmark approves Greenland defence deal 109-0","id":17,"lat":55.7,"lon":12.6,"place":"Copenhagen, Denmark","region":"Europe","sources":["AP via Just Security","Appistos"],"summary":"Folketing unanimously backs the September agreement with Greenland and the US to strengthen Arctic and North Atlantic security.","tier":"also"},{"headline":"UK to give Ukraine 1,000 long-range strike drones","id":18,"lat":51.5,"lon":-0.1,"place":"London, United Kingdom","region":"Europe","sources":["BBC","BBC Politics feed via RSS Orange"],"summary":"PM to announce the pledge at the Coalition of the Willing meeting in Berlin.","tier":"also"},{"headline":"Yunus ancestral home torched amid Bangladesh shutdown","id":19,"lat":23.8,"lon":90.4,"place":"Dhaka, Bangladesh","region":"Asia","sources":["Open Chronicle","Bangladesh Chronicle"],"summary":"Awami League calls a nationwide shutdown after Hasina's ID request is rejected; Yunus family home reported set ablaze.","tier":"also"},{"headline":"Aid groups score Gaza peace plan 4 out of 26","id":20,"lat":31.5,"lon":34.3,"place":"Gaza","region":"Middle East","sources":["Appistos","Open Chronicle"],"summary":"Five aid organisations' joint review scores implementation of the 20-point plan against their April assessment.","tier":"also"},{"headline":"589 million children lived in conflict zones in 2025","id":21,"lat":20.0,"lon":10.0,"place":"Global","region":"Global","sources":["Save the Children via Appistos","AP wire"],"summary":"Save the Children puts the share at 23.4% of all children, based on proximity to recorded violent events.","tier":"also"},{"headline":"Explosion at Cepu refinery kills one worker","id":22,"lat":-7.1,"lon":111.6,"place":"Cepu, Indonesia","region":"Asia","sources":["Reuters","Indonesian energy ministry via Reuters"],"summary":"Blast at a tank during maintenance shutdown; fire brought under control and cause under investigation, energy ministry says.","tier":"also"},{"headline":"Indonesia fire emissions third-highest on record","id":23,"lat":0.0,"lon":109.0,"place":"Indonesia","region":"Asia","sources":["Reuters","EU Copernicus CAMS via Reuters"],"summary":"Copernicus: nearly 200 million tonnes of carbon from fires by 15 Nov, driven by super El Nino dryness and land clearing.","tier":"also"},{"headline":"US sanctions three over Southeast Asia scam centres","id":24,"lat":38.9,"lon":-77.0,"place":"Washington / Southeast Asia","region":"Asia","sources":["Reuters","US Treasury via Reuters"],"summary":"Treasury sanctions three people and two companies linked to scam compounds in Cambodia and Myanmar targeting Americans and Europeans.","tier":"also"},{"headline":"US files emergency bid over Venezuelan TPS","id":25,"lat":38.9,"lon":-77.0,"place":"Washington, United States","region":"Americas","sources":["AP via Just Security","Appistos"],"summary":"Administration asks the Supreme Court to stay a ruling restoring deportation protections; filing alone does not grant the stay.","tier":"also"},{"headline":"Trump asks court to let EPA cancel $16bn in climate grants","id":26,"lat":38.9,"lon":-77.1,"place":"Washington, United States","region":"Americas","sources":["AP wire","Elk Grove Laguna News / AP roundup"],"summary":"Administration seeks Supreme Court intervention over Biden-era clean-energy grants the EPA moved to cancel.","tier":"also"},{"headline":"House Democrats nominate Jeffries for Speaker","id":27,"lat":38.9,"lon":-77.0,"place":"Washington, United States","region":"Americas","sources":["New York Times via Just Security","Washington Post via US roundup"],"summary":"Private vote reported 251-11 with two abstentions, ahead of the new Congress in January 2027.","tier":"also"},{"headline":"Sanon guilty on all 8 counts in Moise plot","id":28,"lat":25.8,"lon":-80.2,"place":"Miami, United States","region":"Americas","sources":["New York Times via Just Security","Open Chronicle"],"summary":"Florida man Christian Sanon convicted over the conspiracy to kidnap or kill Haiti's President Jovenel Moise in 2021.","tier":"also"},{"headline":"US and Venezuela agree to restore military ties","id":29,"lat":10.5,"lon":-66.9,"place":"Caracas, Venezuela","region":"Americas","sources":["Open Chronicle","US Defense Secretary via Open Chronicle"],"summary":"Defence Secretary Hegseth announces renewed military communication and intelligence coordination during a Caracas visit.","tier":"also"},{"headline":"Tanker hit in Hormuz, crew reported safe","id":30,"lat":26.2,"lon":56.2,"place":"Strait of Hormuz","region":"Middle East","sources":["UKMTO via Appistos","Open Chronicle"],"summary":"UKMTO 212 relays a time-late engine-room strike report 6 nautical miles north of Khasab; vessels advised to proceed with caution.","tier":"also"},{"headline":"LPG tanker Gas Husky sinks off Bulgaria","id":31,"lat":42.5,"lon":27.9,"place":"Black Sea, Bulgaria","region":"Europe","sources":["Bangladesh Chronicle maritime brief","Varna governor via Appistos"],"summary":"Liberian-flagged vessel carrying about 3,400 tonnes of LPG from Egypt to Romania sank after being struck by projectiles.","tier":"also"},{"headline":"President Lee urges renewed dialogue with Pyongyang","id":32,"lat":37.6,"lon":127.0,"place":"Seoul, South Korea","region":"Asia","sources":["Open Chronicle","Yonhap via Open Chronicle"],"summary":"Lee Jae Myung renews his appeal for talks toward durable peace; a Trump-Kim meeting remains unconfirmed.","tier":"also"},{"headline":"Takaichi and Putin agree to keep communicating","id":33,"lat":35.7,"lon":139.7,"place":"Tokyo, Japan","region":"Asia","sources":["AP via Just Security","Open Chronicle"],"summary":"Japan's PM says she and Putin agreed to maintain contact at various levels, including direct contact.","tier":"also"},{"headline":"Cyclone Akvan: about 72,000 evacuated in eastern India","id":34,"lat":19.5,"lon":85.0,"place":"Odisha coast, India","region":"Asia","sources":["Open Chronicle","DT Next / Indian reports"],"summary":"Evacuations under way as Cyclone Akvan threatens coastal communities; track and impact still subject to weather updates.","tier":"also"},{"headline":"Millions of red crabs begin annual migration","id":35,"lat":-10.4,"lon":105.7,"place":"Christmas Island, Australia","region":"Oceania","sources":["Open Chronicle","Australian parks reporting via Open Chronicle"],"summary":"Christmas Island's red crabs start their yearly march to the sea, closing roads and drawing global attention.","tier":"also"},{"headline":"Rio Tinto commits $250m over Panguna mine legacy","id":36,"lat":-6.3,"lon":155.2,"place":"Bougainville, Papua New Guinea","region":"Oceania","sources":["New York Times via Just Security","Rio Tinto agreement via Just Security"],"summary":"Fund addresses long-lasting environmental and human-rights effects of the copper mine closed in 1989, after a six-year complaint.","tier":"also"},{"headline":"Kenya picks US consortium for critical minerals project","id":37,"lat":-1.3,"lon":36.8,"place":"Nairobi, Kenya","region":"Africa","sources":["AP wire","AP via Breitbart wire listing"],"summary":"Residents seek answers as Kenya selects a US consortium for a critical minerals development.","tier":"also"},{"headline":"AI cyberattack targeted the EU in October, official says","id":38,"lat":50.9,"lon":4.4,"place":"Brussels, Belgium","region":"Europe","sources":["AP wire","Open Chronicle"],"summary":"An official says a cyberattack using artificial intelligence targeted the EU in October; extent and actor not established.","tier":"also"},{"headline":"APEC adopts Shenzhen Outlook on trade, data and AI","id":39,"lat":22.6,"lon":114.1,"place":"Shenzhen, China","region":"Asia","sources":["Appistos","Open Chronicle"],"summary":"Leaders adopt a shared economic and digital cooperation agenda; the text defines cooperation as voluntary and non-binding.","tier":"also"},{"headline":"US-Philippines pursue loan package over $2 billion","id":40,"lat":14.6,"lon":121.0,"place":"Manila, Philippines","region":"Asia","sources":["White House via Appistos","Appistos"],"summary":"White House says the two countries will pursue financing through Foreign Military Financing; no disbursement announced.","tier":"also"}],"title":"The World in One Page"}
+{
+  "date": "2026-11-19",
+  "date_label": "Thursday 19 November 2026",
+  "note": "Each story was reported on 19 November 2026. Key facts are backed by at least two trusted sources listed per story. Disputed or single-actor claims are worded with attribution in the headline/summary.",
+  "stories": [
+    {
+      "headline": "Trump, Xi and Putin hold first trilateral in Shenzhen",
+      "id": 1,
+      "lat": 22.55,
+      "lon": 114.05,
+      "place": "Shenzhen, China",
+      "region": "Asia",
+      "sources": [
+        "AP",
+        "Reuters",
+        "BBC",
+        "Just Security"
+      ],
+      "summary": "90-minute APEC-side meeting ends with a joint peace declaration on UN and ICC reform and nuclear counter-proliferation; no Ukraine settlement announced.",
+      "tier": "lead"
+    },
+    {
+      "headline": "World Court: Myanmar committed genocide against Rohingya",
+      "id": 2,
+      "lat": 21.9,
+      "lon": 95.9,
+      "place": "The Hague / Myanmar",
+      "region": "Global",
+      "sources": [
+        "Reuters via Just Security",
+        "BBC",
+        "Appistos",
+        "Open Chronicle"
+      ],
+      "summary": "ICJ rules 9-6 that Myanmar bears state responsibility for genocide in northern Rakhine, ordering restitution measures and investigations.",
+      "tier": "lead"
+    },
+    {
+      "headline": "Crimean Bridge hit for third time this week",
+      "id": 3,
+      "lat": 45.3,
+      "lon": 36.6,
+      "place": "Kerch Strait, Crimea",
+      "region": "Europe",
+      "sources": [
+        "BBC via Just Security",
+        "Reuters",
+        "Appistos",
+        "UB Standard"
+      ],
+      "summary": "Russia says Ukraine struck the Kerch Bridge again; rail traffic was suspended and damage assessed. Kyiv calls the operation unprecedented.",
+      "tier": "lead"
+    },
+    {
+      "headline": "Israeli tanks push into central Gaza",
+      "id": 4,
+      "lat": 31.4,
+      "lon": 34.4,
+      "place": "Nuseirat, Gaza",
+      "region": "Middle East",
+      "sources": [
+        "BBC via Just Security",
+        "Reuters via Just Security",
+        "UB Standard"
+      ],
+      "summary": "IDF launches a rare operation east of Nuseirat after evacuation orders, saying it targeted a tunnel; residents report artillery fire and flight.",
+      "short": "Tanks east of Nuseirat; tunnel targeted, IDF says.",
+      "tier": "card"
+    },
+    {
+      "headline": "Missile damages PIF Tower in Riyadh",
+      "id": 5,
+      "lat": 24.7,
+      "lon": 46.7,
+      "place": "Riyadh, Saudi Arabia",
+      "region": "Middle East",
+      "sources": [
+        "Reuters",
+        "New York Times via Just Security",
+        "Appistos"
+      ],
+      "summary": "A strike on 19 Nov damaged Saudi Arabia's Public Investment Fund tower; three sources familiar say it was a Houthi missile. Houthis did not immediately claim it.",
+      "short": "PIF tower damaged; sources blame a Houthi missile.",
+      "tier": "card"
+    },
+    {
+      "headline": "COP31 draft drops all fossil-fuel language",
+      "id": 6,
+      "lat": 36.9,
+      "lon": 30.7,
+      "place": "Antalya, Turkey",
+      "region": "Global",
+      "sources": [
+        "Reuters",
+        "UN News",
+        "Open Chronicle"
+      ],
+      "summary": "Antalya draft cut from 144 to 80 paragraphs removes fossil-fuel references, first COP text to acknowledge 1.5C overshoot; Friday deadline looms.",
+      "short": "Draft drops fossil fuels, notes 1.5C overshoot.",
+      "tier": "card"
+    },
+    {
+      "headline": "Serbia elects student-backed speaker 140-97",
+      "id": 7,
+      "lat": 44.8,
+      "lon": 20.5,
+      "place": "Belgrade, Serbia",
+      "region": "Europe",
+      "sources": [
+        "AP",
+        "Appistos",
+        "Rapporteur",
+        "CRTA"
+      ],
+      "summary": "Aleksandar Cupic of the Student List becomes parliament speaker and acting president after Vucic's resignation; rival Stojan Radenovic took 97 votes.",
+      "short": "Cupic 140, Radenovic 97; speaker is acting president.",
+      "tier": "card"
+    },
+    {
+      "headline": "IAEA: North Korea expanding Yongbyon enrichment",
+      "id": 8,
+      "lat": 39.8,
+      "lon": 125.8,
+      "place": "Yongbyon, North Korea",
+      "region": "Asia",
+      "sources": [
+        "AP via Just Security",
+        "IAEA via Open Chronicle",
+        "Just Security"
+      ],
+      "summary": "IAEA chief Grossi tells the board the Yongbyon uranium enrichment plant has been expanded, calling it a cause for serious concern.",
+      "short": "Enrichment plant expanded, Grossi tells IAEA board.",
+      "tier": "card"
+    },
+    {
+      "headline": "Fiji declares national disaster over El Nino drought",
+      "id": 9,
+      "lat": -17.7,
+      "lon": 178.4,
+      "place": "Fiji",
+      "region": "Oceania",
+      "sources": [
+        "Appistos",
+        "Open Chronicle"
+      ],
+      "summary": "Nationwide disaster declaration as El Nino drought threatens drinking water; emergency support prioritised for remote communities and farmers.",
+      "short": "Nationwide disaster declared; water support surges.",
+      "tier": "card"
+    },
+    {
+      "headline": "Van Gogh sells for record $190.4 million",
+      "id": 10,
+      "lat": 40.7,
+      "lon": -74.0,
+      "place": "New York, United States",
+      "region": "Americas",
+      "sources": [
+        "AP",
+        "Reuters",
+        "Sotheby's via AP"
+      ],
+      "summary": "Chataigniers en fleurs (1890) sets a Van Gogh auction record at Sotheby's New York after a settlement over its Nazi-era history.",
+      "short": "1890 canvas sets a Van Gogh record at Sotheby's.",
+      "tier": "card"
+    },
+    {
+      "headline": "Walmart raises outlook for third time this year",
+      "id": 11,
+      "lat": 36.4,
+      "lon": -94.2,
+      "place": "Bentonville, United States",
+      "region": "Americas",
+      "sources": [
+        "Reuters",
+        "AP",
+        "Morningstar / Dow Jones"
+      ],
+      "summary": "Q3 revenue $188.8bn, up 5.2%; US e-commerce up 23%. Full-year sales growth guide raised to 4.9-5.2% and adjusted EPS to $2.84-2.89.",
+      "short": "$188.8bn revenue, +5.2%; outlook raised again.",
+      "tier": "card"
+    },
+    {
+      "headline": "Indonesia passes asset-forfeiture law",
+      "id": 12,
+      "lat": -6.2,
+      "lon": 106.8,
+      "place": "Jakarta, Indonesia",
+      "region": "Asia",
+      "sources": [
+        "Reuters",
+        "Antara via Reuters",
+        "Appistos"
+      ],
+      "summary": "Parliament approves seizing assets linked to corruption and other crimes without a prior conviction, for assets of at least 1 billion rupiah.",
+      "short": "Seizure without conviction for assets of Rp1bn+.",
+      "tier": "card"
+    },
+    {
+      "headline": "Somalia orders UAE ambassador to leave in 72 hours",
+      "id": 13,
+      "lat": 2.0,
+      "lon": 45.3,
+      "place": "Mogadishu, Somalia",
+      "region": "Africa",
+      "sources": [
+        "Reuters",
+        "Somali state news agency via Reuters"
+      ],
+      "summary": "Mogadishu expels the UAE envoy and recalls its own, accusing the Emirates of sovereignty violations it calls an open invasion. UAE had not responded.",
+      "short": "UAE envoy given 72 hours; own envoy recalled.",
+      "tier": "card"
+    },
+    {
+      "headline": "Russian strike on Odesa kills 4, injures 13",
+      "id": 14,
+      "lat": 46.5,
+      "lon": 30.7,
+      "place": "Odesa, Ukraine",
+      "region": "Europe",
+      "sources": [
+        "Open Chronicle",
+        "UB Standard"
+      ],
+      "summary": "Reported casualty figures as emergency services assessed damage; subject to confirmation.",
+      "tier": "also"
+    },
+    {
+      "headline": "Trump warns Iran over alleged dirty-bomb plot",
+      "id": 15,
+      "lat": 35.7,
+      "lon": 51.4,
+      "place": "Tehran, Iran",
+      "region": "Middle East",
+      "sources": [
+        "Reuters via Just Security",
+        "New York Times via Just Security",
+        "Breitbart / AP wire"
+      ],
+      "summary": "Trump says US would 'wipe them out' if attacked and will 'see what happens' in the Iran war after 1 Jan 2027; Iran denies the plot.",
+      "tier": "also"
+    },
+    {
+      "headline": "South Korea top court overturns Han Duck-soo conviction",
+      "id": 16,
+      "lat": 37.5,
+      "lon": 127.0,
+      "place": "Seoul, South Korea",
+      "region": "Asia",
+      "sources": [
+        "AP via Just Security",
+        "Just Security"
+      ],
+      "summary": "Supreme Court says intent to aid Yoon's 2024 martial-law decree was not sufficiently proven.",
+      "tier": "also"
+    },
+    {
+      "headline": "Denmark approves Greenland defence deal 109-0",
+      "id": 17,
+      "lat": 55.7,
+      "lon": 12.6,
+      "place": "Copenhagen, Denmark",
+      "region": "Europe",
+      "sources": [
+        "AP via Just Security",
+        "Appistos"
+      ],
+      "summary": "Folketing unanimously backs the September agreement with Greenland and the US to strengthen Arctic and North Atlantic security.",
+      "tier": "also"
+    },
+    {
+      "headline": "UK to give Ukraine 1,000 long-range strike drones",
+      "id": 18,
+      "lat": 51.5,
+      "lon": -0.1,
+      "place": "London, United Kingdom",
+      "region": "Europe",
+      "sources": [
+        "BBC",
+        "BBC Politics feed via RSS Orange"
+      ],
+      "summary": "PM to announce the pledge at the Coalition of the Willing meeting in Berlin.",
+      "tier": "also"
+    },
+    {
+      "headline": "Yunus ancestral home torched amid Bangladesh shutdown",
+      "id": 19,
+      "lat": 23.8,
+      "lon": 90.4,
+      "place": "Dhaka, Bangladesh",
+      "region": "Asia",
+      "sources": [
+        "Open Chronicle",
+        "Bangladesh Chronicle"
+      ],
+      "summary": "Awami League calls a nationwide shutdown after Hasina's ID request is rejected; Yunus family home reported set ablaze.",
+      "tier": "also"
+    },
+    {
+      "headline": "Aid groups score Gaza peace plan 4 out of 26",
+      "id": 20,
+      "lat": 31.5,
+      "lon": 34.3,
+      "place": "Gaza",
+      "region": "Middle East",
+      "sources": [
+        "Appistos",
+        "Open Chronicle"
+      ],
+      "summary": "Five aid organisations' joint review scores implementation of the 20-point plan against their April assessment.",
+      "tier": "also"
+    },
+    {
+      "headline": "589 million children lived in conflict zones in 2025",
+      "id": 21,
+      "lat": 20.0,
+      "lon": 10.0,
+      "place": "Global",
+      "region": "Global",
+      "sources": [
+        "Save the Children via Appistos",
+        "AP wire"
+      ],
+      "summary": "Save the Children puts the share at 23.4% of all children, based on proximity to recorded violent events.",
+      "tier": "also"
+    },
+    {
+      "headline": "Explosion at Cepu refinery kills one worker",
+      "id": 22,
+      "lat": -7.1,
+      "lon": 111.6,
+      "place": "Cepu, Indonesia",
+      "region": "Asia",
+      "sources": [
+        "Reuters",
+        "Indonesian energy ministry via Reuters"
+      ],
+      "summary": "Blast at a tank during maintenance shutdown; fire brought under control and cause under investigation, energy ministry says.",
+      "tier": "also"
+    },
+    {
+      "headline": "Indonesia fire emissions third-highest on record",
+      "id": 23,
+      "lat": 0.0,
+      "lon": 109.0,
+      "place": "Indonesia",
+      "region": "Asia",
+      "sources": [
+        "Reuters",
+        "EU Copernicus CAMS via Reuters"
+      ],
+      "summary": "Copernicus: nearly 200 million tonnes of carbon from fires by 15 Nov, driven by super El Nino dryness and land clearing.",
+      "tier": "also"
+    },
+    {
+      "headline": "US sanctions three over Southeast Asia scam centres",
+      "id": 24,
+      "lat": 38.9,
+      "lon": -77.0,
+      "place": "Washington / Southeast Asia",
+      "region": "Asia",
+      "sources": [
+        "Reuters",
+        "US Treasury via Reuters"
+      ],
+      "summary": "Treasury sanctions three people and two companies linked to scam compounds in Cambodia and Myanmar targeting Americans and Europeans.",
+      "tier": "also"
+    },
+    {
+      "headline": "US files emergency bid over Venezuelan TPS",
+      "id": 25,
+      "lat": 38.9,
+      "lon": -77.0,
+      "place": "Washington, United States",
+      "region": "Americas",
+      "sources": [
+        "AP via Just Security",
+        "Appistos"
+      ],
+      "summary": "Administration asks the Supreme Court to stay a ruling restoring deportation protections; filing alone does not grant the stay.",
+      "tier": "also"
+    },
+    {
+      "headline": "Trump asks court to let EPA cancel $16bn in climate grants",
+      "id": 26,
+      "lat": 38.9,
+      "lon": -77.1,
+      "place": "Washington, United States",
+      "region": "Americas",
+      "sources": [
+        "AP wire",
+        "Elk Grove Laguna News / AP roundup"
+      ],
+      "summary": "Administration seeks Supreme Court intervention over Biden-era clean-energy grants the EPA moved to cancel.",
+      "tier": "also"
+    },
+    {
+      "headline": "House Democrats nominate Jeffries for Speaker",
+      "id": 27,
+      "lat": 38.9,
+      "lon": -77.0,
+      "place": "Washington, United States",
+      "region": "Americas",
+      "sources": [
+        "New York Times via Just Security",
+        "Washington Post via US roundup"
+      ],
+      "summary": "Private vote reported 251-11 with two abstentions, ahead of the new Congress in January 2027.",
+      "tier": "also"
+    },
+    {
+      "headline": "Sanon guilty on all 8 counts in Moise plot",
+      "id": 28,
+      "lat": 25.8,
+      "lon": -80.2,
+      "place": "Miami, United States",
+      "region": "Americas",
+      "sources": [
+        "New York Times via Just Security",
+        "Open Chronicle"
+      ],
+      "summary": "Florida man Christian Sanon convicted over the conspiracy to kidnap or kill Haiti's President Jovenel Moise in 2021.",
+      "tier": "also"
+    },
+    {
+      "headline": "US and Venezuela agree to restore military ties",
+      "id": 29,
+      "lat": 10.5,
+      "lon": -66.9,
+      "place": "Caracas, Venezuela",
+      "region": "Americas",
+      "sources": [
+        "Open Chronicle",
+        "US Defense Secretary via Open Chronicle"
+      ],
+      "summary": "Defence Secretary Hegseth announces renewed military communication and intelligence coordination during a Caracas visit.",
+      "tier": "also"
+    },
+    {
+      "headline": "Tanker hit in Hormuz, crew reported safe",
+      "id": 30,
+      "lat": 26.2,
+      "lon": 56.2,
+      "place": "Strait of Hormuz",
+      "region": "Middle East",
+      "sources": [
+        "UKMTO via Appistos",
+        "Open Chronicle"
+      ],
+      "summary": "UKMTO 212 relays a time-late engine-room strike report 6 nautical miles north of Khasab; vessels advised to proceed with caution.",
+      "tier": "also"
+    },
+    {
+      "headline": "LPG tanker Gas Husky sinks off Bulgaria",
+      "id": 31,
+      "lat": 42.5,
+      "lon": 27.9,
+      "place": "Black Sea, Bulgaria",
+      "region": "Europe",
+      "sources": [
+        "Bangladesh Chronicle maritime brief",
+        "Varna governor via Appistos"
+      ],
+      "summary": "Liberian-flagged vessel carrying about 3,400 tonnes of LPG from Egypt to Romania sank after being struck by projectiles.",
+      "tier": "also"
+    },
+    {
+      "headline": "President Lee urges renewed dialogue with Pyongyang",
+      "id": 32,
+      "lat": 37.6,
+      "lon": 127.0,
+      "place": "Seoul, South Korea",
+      "region": "Asia",
+      "sources": [
+        "Open Chronicle",
+        "Yonhap via Open Chronicle"
+      ],
+      "summary": "Lee Jae Myung renews his appeal for talks toward durable peace; a Trump-Kim meeting remains unconfirmed.",
+      "tier": "also"
+    },
+    {
+      "headline": "Takaichi and Putin agree to keep communicating",
+      "id": 33,
+      "lat": 35.7,
+      "lon": 139.7,
+      "place": "Tokyo, Japan",
+      "region": "Asia",
+      "sources": [
+        "AP via Just Security",
+        "Open Chronicle"
+      ],
+      "summary": "Japan's PM says she and Putin agreed to maintain contact at various levels, including direct contact.",
+      "tier": "also"
+    },
+    {
+      "headline": "Cyclone Akvan: about 72,000 evacuated in eastern India",
+      "id": 34,
+      "lat": 19.5,
+      "lon": 85.0,
+      "place": "Odisha coast, India",
+      "region": "Asia",
+      "sources": [
+        "Open Chronicle",
+        "DT Next / Indian reports"
+      ],
+      "summary": "Evacuations under way as Cyclone Akvan threatens coastal communities; track and impact still subject to weather updates.",
+      "tier": "also"
+    },
+    {
+      "headline": "Millions of red crabs begin annual migration",
+      "id": 35,
+      "lat": -10.4,
+      "lon": 105.7,
+      "place": "Christmas Island, Australia",
+      "region": "Oceania",
+      "sources": [
+        "Open Chronicle",
+        "Australian parks reporting via Open Chronicle"
+      ],
+      "summary": "Christmas Island's red crabs start their yearly march to the sea, closing roads and drawing global attention.",
+      "tier": "also"
+    },
+    {
+      "headline": "Rio Tinto commits $250m over Panguna mine legacy",
+      "id": 36,
+      "lat": -6.3,
+      "lon": 155.2,
+      "place": "Bougainville, Papua New Guinea",
+      "region": "Oceania",
+      "sources": [
+        "New York Times via Just Security",
+        "Rio Tinto agreement via Just Security"
+      ],
+      "summary": "Fund addresses long-lasting environmental and human-rights effects of the copper mine closed in 1989, after a six-year complaint.",
+      "tier": "also"
+    },
+    {
+      "headline": "Kenya picks US consortium for critical minerals project",
+      "id": 37,
+      "lat": -1.3,
+      "lon": 36.8,
+      "place": "Nairobi, Kenya",
+      "region": "Africa",
+      "sources": [
+        "AP wire",
+        "AP via Breitbart wire listing"
+      ],
+      "summary": "Residents seek answers as Kenya selects a US consortium for a critical minerals development.",
+      "tier": "also"
+    },
+    {
+      "headline": "AI cyberattack targeted the EU in October, official says",
+      "id": 38,
+      "lat": 50.9,
+      "lon": 4.4,
+      "place": "Brussels, Belgium",
+      "region": "Europe",
+      "sources": [
+        "AP wire",
+        "Open Chronicle"
+      ],
+      "summary": "An official says a cyberattack using artificial intelligence targeted the EU in October; extent and actor not established.",
+      "tier": "also"
+    },
+    {
+      "headline": "APEC adopts Shenzhen Outlook on trade, data and AI",
+      "id": 39,
+      "lat": 22.6,
+      "lon": 114.1,
+      "place": "Shenzhen, China",
+      "region": "Asia",
+      "sources": [
+        "Appistos",
+        "Open Chronicle"
+      ],
+      "summary": "Leaders adopt a shared economic and digital cooperation agenda; the text defines cooperation as voluntary and non-binding.",
+      "tier": "also"
+    },
+    {
+      "headline": "US-Philippines pursue loan package over $2 billion",
+      "id": 40,
+      "lat": 14.6,
+      "lon": 121.0,
+      "place": "Manila, Philippines",
+      "region": "Asia",
+      "sources": [
+        "White House via Appistos",
+        "Appistos"
+      ],
+      "summary": "White House says the two countries will pursue financing through Foreign Military Financing; no disbursement announced.",
+      "tier": "also"
+    }
+  ],
+  "title": "The World in One Page"
+}
