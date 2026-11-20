@@ -25,7 +25,10 @@ PAPER = (247, 243, 234)      # #F7F3EA, the sheet the page is printed on
 INK = (17, 17, 17)           # #111111, body text
 GOLD = (201, 162, 39)        # #C9A227, rules, kickers and dates
 RED = (155, 27, 27)          # #9B1B1B, accent for court and conflict
-CARD_LINE = (188, 180, 162)  # hairline around the small story cards
+CARD_LINE = (164, 152, 128)  # panel and card borders, darkened in rev2
+# Every framed panel on the page is stroked with this border width, so
+# pale panels still read as boxes against the pale paper around them.
+BORDER_W = 2
 PALE_CARD = (240, 234, 219)  # warm fill behind the court lead
 SKY_WATER = (188, 214, 230)  # sea colour for the map and bridge panels
 LAND_TONE = (233, 223, 193)  # landmass fill on the locator map
@@ -606,6 +609,7 @@ CARD_ICONS = {
 
 def paint_masthead(draw, data):
     draw.rectangle([0, 0, PAGE_W, 80], fill=NAVY)
+    draw.rectangle([0, 80, PAGE_W, 83], fill=GOLD)
     draw.text((MARGIN, 9), "The World in One Page",
               font=get_font("serif-bold", 38), fill=WHITE)
     subtitle = data["date_label"] + " - 40 stories, one image"
@@ -653,7 +657,7 @@ def paint_leads(draw, leads):
                 MIST, 14)
 
     draw.rectangle([676, top, 1000, top + 91], fill=PALE_CARD,
-                   outline=CARD_LINE)
+                   outline=CARD_LINE, width=BORDER_W)
     scene_court_gavel(draw, 676, top, 118, 91)
     draw.text((806, top + 7), "2 World Court",
               font=get_font("sans-bold", 12), fill=RED)
@@ -663,7 +667,7 @@ def paint_leads(draw, leads):
                 get_font("sans-bold", 11), INK, 14)
 
     draw.rectangle([676, top + 99, 1000, top + height], fill=SKY_WATER,
-                   outline=CARD_LINE)
+                   outline=CARD_LINE, width=BORDER_W)
     scene_kerch_bridge(draw, 676, top + 99, 118, 91)
     draw.text((806, top + 106), "3 Crimea Bridge",
               font=get_font("sans-bold", 12), fill=NAVY)
@@ -675,7 +679,8 @@ def paint_leads(draw, leads):
 
 def paint_map(draw, leads, cards, also):
     top, height = 316, 240
-    draw.rectangle([MARGIN, top, 1000, top + height], fill=SKY_WATER)
+    draw.rectangle([MARGIN, top, 1000, top + height], fill=SKY_WATER,
+                   outline=NAVY, width=BORDER_W)
     draw.text((36, top + 6), "Where it happened - pins 1-13, dots for the rest",
               font=get_font("sans-bold", 12), fill=NAVY)
     project = paint_landmasses(draw, (36, top + 30, 988, top + height - 10))
@@ -691,7 +696,7 @@ def paint_cards(draw, cards):
         left = MARGIN + (idx % 5) * (card_w + gap)
         top = grid_top + (idx // 5) * (card_h + gap)
         draw.rectangle([left, top, left + card_w, top + card_h], fill=WHITE,
-                       outline=CARD_LINE)
+                       outline=CARD_LINE, width=BORDER_W)
         painter = CARD_ICONS.get(story["id"])
         if painter is not None:
             painter(draw, left + 5, top + 5, 54, 81)
@@ -717,22 +722,43 @@ def paint_cards(draw, cards):
 def paint_also_list(draw, also):
     top = 762
     draw.rectangle([MARGIN, top, 1000, 982], fill=NAVY)
-    draw.text((36, top + 7), "Also on 19 November",
+    draw.rectangle([MARGIN + 4, top + 4, 996, 978], outline=GOLD,
+                   width=1)
+    draw.text((36, top + 8), "Also on 19 November",
               font=get_font("sans-bold", 13), fill=GOLD)
     body_font = get_font("sans", 9)
     column_w = 312
     per_column = 9
+    leading = 12
+    item_gap = 5
+    # Measure every column before painting anything: with the wider
+    # leading the three columns nearly fill the box, and whatever
+    # slack remains is split evenly above and below the tallest
+    # column, so the whole block sits centred in the box instead of
+    # hugging its top edge and leaving an empty band at the bottom.
+    columns = []
     for column in range(3):
         batch = also[column * per_column:(column + 1) * per_column]
-        x = 36 + column * (column_w + 12)
-        y = top + 32
+        wrapped = []
+        height = 0
         for story in batch:
             entry = str(story["id"]) + ". " + story["headline"]
-            for line in fold_text(draw, entry, body_font, column_w,
-                                  limit=2):
+            lines = fold_text(draw, entry, body_font, column_w, limit=2)
+            wrapped.append(lines)
+            height += len(lines) * leading + item_gap
+        columns.append((wrapped, height - item_gap))
+    tallest = max(height for _, height in columns)
+    area_top = top + 34
+    area_bottom = 982 - 10
+    slack = max(0, (area_bottom - area_top) - tallest)
+    for column, (wrapped, _) in enumerate(columns):
+        x = 36 + column * (column_w + 12)
+        y = area_top + slack // 2
+        for lines in wrapped:
+            for line in lines:
                 draw.text((x, y), line, font=body_font, fill=MIST)
-                y += 11
-            y += 3
+                y += leading
+            y += item_gap
 
 
 def paint_footer(draw):
