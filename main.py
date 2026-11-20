@@ -75,9 +75,10 @@ def draw_lines(draw, lines, x, y, fnt, fill, lh):
     return y
 
 
-# ------------------------------------------------------- coastline (copied
-# from the reusable news-image library and kept inside this repo, per the
-# provenance rule: no imports from outside the repository)
+# ------------------------------------------- hand-simplified world outline
+# Rough continent polygons in (lon, lat), simplified by hand for this
+# page until the shapes read at 952 px wide. They live in this file on
+# purpose: the renderer must not import anything from outside the repo.
 NORTH_AMERICA = [
     (-168, 66), (-162, 60), (-155, 58), (-148, 60), (-140, 60), (-135, 57),
     (-130, 54), (-125, 49), (-124, 42), (-121, 36), (-117, 32), (-111, 28),
@@ -172,20 +173,32 @@ CONTINENTS = [
 ]
 
 
-def make_projector(x0, y0, x1, y1, lon_min=-170, lon_max=190, lat_min=-55,
-                   lat_max=80):
+def projector_for(x0, y0, x1, y1):
+    """Build a lon/lat -> pixel function for one map box.
+
+    The world window is fixed for this page: longitude -170..190,
+    latitude -55..80. The returned closure is the only place that knows
+    the projection, so the painters below stay in pixel terms.
+    """
+    span_lon = 190 - (-170)
+    span_lat = 80 - (-55)
+
     def project(lon, lat):
-        return (x0 + (lon - lon_min) / (lon_max - lon_min) * (x1 - x0),
-                y0 + (lat_max - lat) / (lat_max - lat_min) * (y1 - y0))
+        px = x0 + (lon - (-170)) / span_lon * (x1 - x0)
+        py = y0 + (80 - lat) / span_lat * (y1 - y0)
+        return (px, py)
+
     return project
 
 
-def draw_map(draw, x0, y0, x1, y1, land=LAND, outline=(150, 142, 122)):
-    proj = make_projector(x0, y0, x1, y1)
-    for poly in CONTINENTS:
-        draw.polygon([proj(lon, lat) for lon, lat in poly], fill=land,
-                     outline=outline)
-    return proj
+def paint_world(draw, x0, y0, x1, y1):
+    """Fill every landmass polygon inside the box; return its projector."""
+    project = projector_for(x0, y0, x1, y1)
+    edge = (150, 142, 122)
+    for landmass in CONTINENTS:
+        points = [project(lon, lat) for lon, lat in landmass]
+        draw.polygon(points, fill=LAND, outline=edge)
+    return project
 
 
 # Pixel offsets for pins whose places sit close together on the map
@@ -196,168 +209,186 @@ PIN_OFFSETS = {
 }
 
 
-def draw_pins(draw, proj, pins, radius=8, number_size=9):
-    f = font(SANS_B, number_size)
+def mark_pins(draw, project, pins, radius=8, number_size=9):
+    """Numbered story markers: dark halo, coloured disc, white numeral."""
+    numeral = font(SANS_B, number_size)
     for lon, lat, num, col in pins:
-        px, py = proj(lon, lat)
-        dx, dy = PIN_OFFSETS.get(num, (0, 0))
-        px, py = px + dx, py + dy
-        draw.ellipse([px - radius - 1, py - radius - 1, px + radius + 1,
-                      py + radius + 1], fill=MAST_DARK)
-        draw.ellipse([px - radius, py - radius, px + radius, py + radius],
-                     fill=col, outline=WHITE, width=2)
-        t = str(num)
-        draw.text((px - draw.textlength(t, font=f) / 2,
-                   py - number_size / 2 - 1), t, font=f, fill=WHITE)
+        px, py = project(lon, lat)
+        shift_x, shift_y = PIN_OFFSETS.get(num, (0, 0))
+        px, py = px + shift_x, py + shift_y
+        halo = [px - radius - 1, py - radius - 1,
+                px + radius + 1, py + radius + 1]
+        draw.ellipse(halo, fill=MAST_DARK)
+        disc = [px - radius, py - radius, px + radius, py + radius]
+        draw.ellipse(disc, fill=col, outline=WHITE, width=2)
+        label = str(num)
+        label_x = px - draw.textlength(label, font=numeral) / 2
+        draw.text((label_x, py - number_size / 2 - 1), label,
+                  font=numeral, fill=WHITE)
 
 
-def draw_dots(draw, proj, dots, radius=2, fill=INK):
-    for lon, lat in dots:
-        px, py = proj(lon, lat)
+def mark_dots(draw, project, places, radius=2):
+    """Small plain dots for the 'also on' stories."""
+    for lon, lat in places:
+        px, py = project(lon, lat)
         draw.ellipse([px - radius, py - radius, px + radius, py + radius],
-                     fill=fill)
+                     fill=INK)
 
 
 # ------------------------------------------------------------------ scenes
-# Adapted in this session from the reusable library scenes (copied, not
-# imported), with sizes and colours adjusted for this page's layout.
+# Pictograms for this page, drawn from Pillow primitives only. Each one
+# paints inside its (x, y, w, h) box and draws no text of its own.
 
-def _star(d, cx, cy, r, fill, spikes=10):
-    pts = []
-    for i in range(spikes * 2):
-        ang = i * math.pi / spikes - math.pi / 2
-        rr = r if i % 2 == 0 else r * 0.45
-        pts.append((cx + rr * math.cos(ang), cy + rr * math.sin(ang)))
-    d.polygon(pts, fill=fill)
-
-
-def _explosion(d, cx, cy, r):
-    _star(d, cx, cy, r, (255, 140, 0))
-    _star(d, cx, cy, r * 0.6, (255, 220, 0))
-    d.ellipse([cx - r * 0.22, cy - r * 0.22, cx + r * 0.22, cy + r * 0.22],
-              fill=WHITE)
+def burst_shape(d, cx, cy, r, fill, points=10):
+    """A jagged starburst: alternating long and short spikes."""
+    corners = []
+    step = 0
+    while step < points * 2:
+        ang = step * math.pi / points - math.pi / 2
+        reach = r if step % 2 == 0 else r * 0.45
+        corners.append((cx + reach * math.cos(ang),
+                        cy + reach * math.sin(ang)))
+        step += 1
+    d.polygon(corners, fill=fill)
 
 
-def _smoke(d, cx, cy, r):
-    for i, (dx, dy, rr) in enumerate(
-            [(-r, 0, r * 0.55), (0, -r * 0.7, r * 0.65),
-             (r * 0.8, -r * 0.3, r * 0.5)]):
-        d.ellipse([cx + dx - rr, cy + dy - rr, cx + dx + rr, cy + dy + rr],
-                  fill=(120, 120, 118) if i % 2 == 0 else (150, 150, 146))
+def burst(d, cx, cy, r):
+    """Two nested starbursts and a hot core: this page's explosion mark."""
+    burst_shape(d, cx, cy, r, (255, 140, 0))
+    burst_shape(d, cx, cy, r * 0.6, (255, 220, 0))
+    core = r * 0.22
+    d.ellipse([cx - core, cy - core, cx + core, cy + core], fill=WHITE)
 
 
-def _waves(d, x, y, w, h, color=WHITE):
-    for row in range(3):
+def haze(d, cx, cy, r):
+    """Three overlapping grey puffs, read as smoke at small sizes."""
+    puffs = [(-r, 0, r * 0.55), (0, -r * 0.7, r * 0.65),
+             (r * 0.8, -r * 0.3, r * 0.5)]
+    shades = [(120, 120, 118), (150, 150, 146), (120, 120, 118)]
+    for (off_x, off_y, puff_r), shade in zip(puffs, shades):
+        d.ellipse([cx + off_x - puff_r, cy + off_y - puff_r,
+                   cx + off_x + puff_r, cy + off_y + puff_r], fill=shade)
+
+
+def surf(d, x, y, w, h, color=WHITE):
+    """Rows of small arcs suggesting water."""
+    row = 0
+    while row < 3:
         yy = y + row * h // 3
-        for i in range(4):
-            xx = x + i * w // 4
-            d.arc([xx, yy, xx + w // 4, yy + h // 3], 180, 360, fill=color,
-                  width=2)
+        col = 0
+        while col < 4:
+            xx = x + col * w // 4
+            d.arc([xx, yy, xx + w // 4, yy + h // 3], 180, 360,
+                  fill=color, width=2)
+            col += 1
+        row += 1
 
 
-def scene_skyline(d, x, y, w, h):
+def paint_skyline(d, x, y, w, h):
     """Dusk skyline with lit windows and three flag poles (summit)."""
     d.rectangle([x, y, x + w, y + h], fill=(26, 44, 66))
-    d.ellipse([x + w * 0.85, y + h * 0.05, x + w * 0.94, y + h * 0.19],
-              fill=(255, 214, 120))
-    heights = [0.52, 0.74, 0.60, 0.86, 0.66, 0.78, 0.56, 0.70]
-    bw = w / len(heights)
-    for i, fh in enumerate(heights):
-        bx = x + i * bw + 2
-        by = y + h * (1 - fh)
-        d.rectangle([bx, by, bx + bw - 4, y + h], fill=MAST_DARK)
-        for wy in range(3):
-            for wx in range(2):
-                if (i + wy + wx) % 2 == 0:
-                    wxp = bx + 5 + wx * (bw / 2 - 2)
-                    wyp = by + 8 + wy * 13
-                    d.rectangle([wxp, wyp, wxp + 5, wyp + 6],
+    moon = [x + w * 0.85, y + h * 0.05, x + w * 0.94, y + h * 0.19]
+    d.ellipse(moon, fill=(255, 214, 120))
+    tower_heights = [0.52, 0.74, 0.60, 0.86, 0.66, 0.78, 0.56, 0.70]
+    tower_w = w / len(tower_heights)
+    for idx, frac_h in enumerate(tower_heights):
+        left = x + idx * tower_w + 2
+        top = y + h * (1 - frac_h)
+        d.rectangle([left, top, left + tower_w - 4, y + h], fill=MAST_DARK)
+        for row_i in range(3):
+            for col_i in range(2):
+                if (idx + row_i + col_i) % 2 == 0:
+                    win_x = left + 5 + col_i * (tower_w / 2 - 2)
+                    win_y = top + 8 + row_i * 13
+                    d.rectangle([win_x, win_y, win_x + 5, win_y + 6],
                                 fill=(255, 214, 120))
-    for i, col in enumerate([(178, 34, 52), (60, 59, 110), (222, 41, 16)]):
-        fx = x + w * (0.14 + i * 0.22)
-        d.line([(fx, y + h * 0.22), (fx, y + h * 0.52)], fill=WHITE, width=2)
-        d.rectangle([fx + 2, y + h * 0.22, fx + 2 + w * 0.075,
-                     y + h * 0.22 + h * 0.10], fill=col)
+    flag_cols = [(178, 34, 52), (60, 59, 110), (222, 41, 16)]
+    for idx, col in enumerate(flag_cols):
+        pole_x = x + w * (0.14 + idx * 0.22)
+        pole_top = y + h * 0.22
+        d.line([(pole_x, pole_top), (pole_x, y + h * 0.52)], fill=WHITE,
+               width=2)
+        d.rectangle([pole_x + 2, pole_top, pole_x + 2 + w * 0.075,
+                     pole_top + h * 0.10], fill=col)
 
 
-def scene_gavel(d, x, y, w, h):
+def paint_gavel(d, x, y, w, h):
     """Gavel and sound block (court ruling)."""
+    wood = (120, 90, 50)
+    dark_wood = (90, 60, 30)
     d.rectangle([x, y, x + w, y + h], fill=(238, 232, 218))
-    d.ellipse([x + w * 0.30, y + h * 0.72, x + w * 0.70, y + h * 0.86],
-              fill=(120, 90, 50))
-    d.line([(x + w * 0.22, y + h * 0.62), (x + w * 0.62, y + h * 0.22)],
-           fill=(90, 60, 30), width=8)
-    d.rectangle([x + w * 0.55, y + h * 0.10, x + w * 0.80, y + h * 0.28],
-                fill=(120, 90, 50))
-    d.rectangle([x + w * 0.14, y + h * 0.50, x + w * 0.38, y + h * 0.68],
-                fill=(120, 90, 50))
-    for i in range(3):
-        d.arc([x + w * 0.55, y + h * 0.05 + i * 6, x + w * 0.95,
-               y + h * 0.45 + i * 6], 270, 360, fill=SLATE, width=2)
+    block = [x + w * 0.30, y + h * 0.72, x + w * 0.70, y + h * 0.86]
+    d.ellipse(block, fill=wood)
+    handle = [(x + w * 0.22, y + h * 0.62), (x + w * 0.62, y + h * 0.22)]
+    d.line(handle, fill=dark_wood, width=8)
+    head_a = [x + w * 0.55, y + h * 0.10, x + w * 0.80, y + h * 0.28]
+    head_b = [x + w * 0.14, y + h * 0.50, x + w * 0.38, y + h * 0.68]
+    d.rectangle(head_a, fill=wood)
+    d.rectangle(head_b, fill=wood)
+    ring = 0
+    while ring < 3:
+        arc_box = [x + w * 0.55, y + h * 0.05 + ring * 6,
+                   x + w * 0.95, y + h * 0.45 + ring * 6]
+        d.arc(arc_box, 270, 360, fill=SLATE, width=2)
+        ring += 1
 
 
-def scene_bridge(d, x, y, w, h):
+def paint_bridge(d, x, y, w, h):
     """Bridge over a strait with a blasted gap in the deck."""
     d.rectangle([x, y, x + w, y + h], fill=(214, 228, 238))
-    d.rectangle([x, y + h * 0.62, x + w, y + h], fill=SEA)
-    _waves(d, x + 6, y + h * 0.68, w - 12, h * 0.26)
-    dy = y + h * 0.55
-    d.line([(x + 4, dy), (x + w * 0.42, dy)], fill=INK, width=4)
-    d.line([(x + w * 0.58, dy), (x + w - 4, dy)], fill=INK, width=4)
-    d.arc([x + w * 0.30, dy - h * 0.34, x + w * 0.70, dy + h * 0.10],
-          180, 360, fill=INK, width=5)
-    for px in [0.16, 0.84]:
-        d.rectangle([x + w * px - 3, dy, x + w * px + 3, y + h * 0.62],
-                    fill=INK)
-    _smoke(d, x + w * 0.5, dy - h * 0.30, h * 0.10)
-    _explosion(d, x + w * 0.5, dy - h * 0.08, h * 0.13)
+    water_top = y + h * 0.62
+    d.rectangle([x, water_top, x + w, y + h], fill=SEA)
+    surf(d, x + 6, y + h * 0.68, w - 12, h * 0.26)
+    deck_y = y + h * 0.55
+    d.line([(x + 4, deck_y), (x + w * 0.42, deck_y)], fill=INK, width=4)
+    d.line([(x + w * 0.58, deck_y), (x + w - 4, deck_y)], fill=INK, width=4)
+    arch = [x + w * 0.30, deck_y - h * 0.34, x + w * 0.70,
+            deck_y + h * 0.10]
+    d.arc(arch, 180, 360, fill=INK, width=5)
+    for frac in (0.16, 0.84):
+        pier_x = x + w * frac
+        d.rectangle([pier_x - 3, deck_y, pier_x + 3, water_top], fill=INK)
+    haze(d, x + w * 0.5, deck_y - h * 0.30, h * 0.10)
+    burst(d, x + w * 0.5, deck_y - h * 0.08, h * 0.13)
 
 
-def scene_globe_fire(d, x, y, w, h):
-    """Globe with a flame (climate talks)."""
-    cx, cy, r = x + w * 0.38, y + h * 0.55, min(w, h) * 0.34
+def paint_globe_flame(d, x, y, w, h):
+    """Globe with a flame beside it (climate talks)."""
+    cx, cy = x + w * 0.38, y + h * 0.55
+    r = min(w, h) * 0.34
     d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=SEA, outline=MAST,
               width=2)
-    d.ellipse([cx - r * 0.45, cy - r, cx + r * 0.45, cy + r], outline=MAST)
+    meridian = [cx - r * 0.45, cy - r, cx + r * 0.45, cy + r]
+    d.ellipse(meridian, outline=MAST)
     d.line([(cx - r, cy), (cx + r, cy)], fill=MAST, width=2)
     fx, fy = x + w * 0.76, y + h * 0.55
-    d.polygon([(fx, fy - r * 1.1), (fx + r * 0.5, fy - r * 0.2),
-               (fx + r * 0.35, fy + r * 0.5), (fx - r * 0.35, fy + r * 0.5),
-               (fx - r * 0.5, fy - r * 0.2)], fill=ORANGE)
-    d.polygon([(fx, fy - r * 0.5), (fx + r * 0.28, fy),
-               (fx + r * 0.2, fy + r * 0.4), (fx - r * 0.2, fy + r * 0.4),
-               (fx - r * 0.28, fy)], fill=(255, 220, 0))
+    outer_flame = [(fx, fy - r * 1.1), (fx + r * 0.5, fy - r * 0.2),
+                   (fx + r * 0.35, fy + r * 0.5),
+                   (fx - r * 0.35, fy + r * 0.5),
+                   (fx - r * 0.5, fy - r * 0.2)]
+    inner_flame = [(fx, fy - r * 0.5), (fx + r * 0.28, fy),
+                   (fx + r * 0.2, fy + r * 0.4),
+                   (fx - r * 0.2, fy + r * 0.4),
+                   (fx - r * 0.28, fy)]
+    d.polygon(outer_flame, fill=ORANGE)
+    d.polygon(inner_flame, fill=(255, 220, 0))
 
 
-def scene_parliament(d, x, y, w, h, frac=0.56):
-    """Hemicycle of seats, frac of them in mast colour."""
+def paint_hemicycle(d, x, y, w, h, share=0.56):
+    """Semicircle of seats; the first `share` of them in mast colour."""
     cx, cy = x + w / 2, y + h * 0.94
-    total_a = int(21 * frac)
-    idx = 0
-    for row, rr in enumerate([0.82, 0.60, 0.38]):
-        for i in range(7):
-            a = math.pi * (1 - (i + 0.5) / 7)
-            px = cx + rr * w * 0.48 * math.cos(a)
-            py = cy - rr * h * 0.88 * math.sin(a)
-            d.ellipse([px - 5, py - 5, px + 5, py + 5],
-                      fill=MAST if idx < total_a else (210, 210, 200))
-            idx += 1
-
-
-def scene_drone(d, x, y, w, h):
-    """Drone with dashed path and an explosion over a base."""
-    d.rectangle([x, y, x + w, y + h], fill=(232, 222, 200))
-    d.rectangle([x, y + h * 0.72, x + w, y + h], fill=(200, 190, 150))
-    px, py = x + w * 0.12, y + h * 0.24
-    ex, ey = x + w * 0.70, y + h * 0.50
-    for t in [i / 12 for i in range(13)]:
-        cx = px + (ex - px) * t
-        cy = py + (ey - py) * t + 6 * math.sin(t * 3)
-        d.ellipse([cx - 2, cy - 2, cx + 2, cy + 2], fill=SLATE)
-    d.ellipse([px - 8, py - 3, px + 8, py + 3], fill=INK)
-    d.line([(px - 14, py - 4), (px + 14, py - 4)], fill=INK, width=2)
-    _explosion(d, ex, ey, h * 0.20)
-    _smoke(d, ex, ey - h * 0.20, h * 0.10)
+    filled = int(21 * share)
+    seat_no = 0
+    for ring_r in (0.82, 0.60, 0.38):
+        seat = 0
+        while seat < 7:
+            ang = math.pi * (1 - (seat + 0.5) / 7)
+            px = cx + ring_r * w * 0.48 * math.cos(ang)
+            py = cy - ring_r * h * 0.88 * math.sin(ang)
+            tone = MAST if seat_no < filled else (210, 210, 200)
+            d.ellipse([px - 5, py - 5, px + 5, py + 5], fill=tone)
+            seat_no += 1
+            seat += 1
 
 
 # ------------------------------------------------------------- card icons
@@ -380,14 +411,14 @@ def draw_card_icon(d, kind, x, y, w, h):
             px = cx + 10 + w * 0.34 * t
             py = cy + 7 + h * 0.32 * t
             d.ellipse([px - 1.5, py - 1.5, px + 1.5, py + 1.5], fill=SLATE)
-        _explosion(d, x + w * 0.74, y + h * 0.60, h * 0.13)
-        _smoke(d, x + w * 0.74, y + h * 0.42, h * 0.08)
+        burst(d, x + w * 0.74, y + h * 0.60, h * 0.13)
+        haze(d, x + w * 0.74, y + h * 0.42, h * 0.08)
     elif kind == "globe":
         d.rectangle([x, y, x + w, y + h], fill=(226, 238, 244))
-        scene_globe_fire(d, x, y, w, h)
+        paint_globe_flame(d, x, y, w, h)
     elif kind == "parliament":
         d.rectangle([x, y, x + w, y + h], fill=(240, 236, 224))
-        scene_parliament(d, x, y, w, h, frac=140 / 250)
+        paint_hemicycle(d, x, y, w, h, share=140 / 250)
     elif kind == "tower":
         d.rectangle([x, y, x + w, y + h], fill=(214, 228, 238))
         bx = x + w * 0.38
@@ -396,8 +427,8 @@ def draw_card_icon(d, kind, x, y, w, h):
             d.rectangle([bx + 5, y + h * (0.28 + r * 0.20),
                          bx + w * 0.24 - 5, y + h * (0.38 + r * 0.20)],
                         fill=(255, 214, 120))
-        _explosion(d, bx + w * 0.12, y + h * 0.22, h * 0.20)
-        _smoke(d, bx + w * 0.12, y + h * 0.05, h * 0.10)
+        burst(d, bx + w * 0.12, y + h * 0.22, h * 0.20)
+        haze(d, bx + w * 0.12, y + h * 0.05, h * 0.10)
     elif kind == "atom":
         d.rectangle([x, y, x + w, y + h], fill=(30, 42, 68))
         cx, cy = x + w / 2, y + h / 2
@@ -524,7 +555,7 @@ def main():
     ly, lh = 118, 190
     # lead 1 (big, left)
     d.rectangle([24, ly, 664, ly + lh], fill=(26, 44, 66))
-    scene_skyline(d, 24, ly, 640, 128)
+    paint_skyline(d, 24, ly, 640, 128)
     d.rectangle([24, ly + 128, 664, ly + lh], fill=MAST_DARK)
     d.text((36, ly + 134), "1  SHENZHEN SUMMIT", font=font(SANS_B, 15),
            fill=GOLD)
@@ -536,7 +567,7 @@ def main():
     # lead 2 (top right): gavel scene left, text right
     d.rectangle([676, ly, 1000, ly + 91], fill=(238, 232, 218),
                 outline=(200, 194, 178))
-    scene_gavel(d, 676, ly, 118, 91)
+    paint_gavel(d, 676, ly, 118, 91)
     d.text((806, ly + 7), "2  WORLD COURT", font=font(SANS_B, 12),
            fill=CRIMSON)
     for i, ln in enumerate(wrap(d, leads[1]["headline"],
@@ -545,7 +576,7 @@ def main():
     # lead 3 (bottom right): bridge scene left, text right
     d.rectangle([676, ly + 99, 1000, ly + lh], fill=(214, 228, 238),
                 outline=(200, 194, 178))
-    scene_bridge(d, 676, ly + 99, 118, 91)
+    paint_bridge(d, 676, ly + 99, 118, 91)
     d.text((806, ly + 106), "3  CRIMEA BRIDGE", font=font(SANS_B, 12),
            fill=MAST)
     for i, ln in enumerate(wrap(d, leads[2]["headline"],
@@ -558,12 +589,12 @@ def main():
     d.rectangle([24, my, 1000, my + mh], fill=(226, 238, 244))
     d.text((36, my + 6), "WHERE IT HAPPENED - pins 1-13, dots for the rest",
            font=font(SANS_B, 12), fill=MAST)
-    proj = draw_map(d, 36, my + 30, 988, my + mh - 10)
+    proj = paint_world(d, 36, my + 30, 988, my + mh - 10)
     pins = [(s["lon"], s["lat"], s["id"],
              REGION_COLORS.get(s["region"], SLATE))
             for s in leads + cards]
-    draw_pins(d, proj, pins, radius=8, number_size=9)
-    draw_dots(d, proj, [(s["lon"], s["lat"]) for s in also], radius=2)
+    mark_pins(d, proj, pins, radius=8, number_size=9)
+    mark_dots(d, proj, [(s["lon"], s["lat"]) for s in also], radius=2)
 
     # cards grid: 5 across x 2 rows; headline plus a short summary line
     cy0 = 564
