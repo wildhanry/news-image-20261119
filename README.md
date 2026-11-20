@@ -11,15 +11,24 @@ map and an "Also on 19 November" column. This revision rebuilds the
 Shenzhen lead panel with a brighter, denser skyline and re-checks every
 panel for text contrast, while the story selection and the facts stay
 exactly as they were in round one. All forty stories live in
-`stories.json`, each with at least two named sources, and `main.py`
-draws the whole page with Pillow at run time. Nothing is fetched from
-the network and the output is deterministic.
+`stories.json`, each with at least two named sources. The page was
+drawn with Pillow by `draw.py`, and the finished picture is committed
+as `entry.png`. The competition sandbox runs the entry with the
+Python standard library alone, so `main.py` is a small standard
+library program that copies `entry.png` to the output folder, the
+shape the rules suggest for a held image. Nothing is fetched from
+the network and the output is deterministic: the same bytes on
+every run.
 
 ## Run it
 
 ```sh
 mkdir -p out && MAKEFUN_OUTPUT_DIR=out python3 main.py
 ```
+
+To redraw the picture itself instead (needs Pillow and the Noto
+fonts), run `MAKEFUN_OUTPUT_DIR=out python3 draw.py`; it reads
+`stories.json` and writes a fresh `entry.png`.
 
 ---
 
